@@ -40,5 +40,20 @@ namespace OrderService.Service
             return JsonSerializer.Deserialize<UserDto>(json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        public async Task<bool> ProcessPayment(int orderId, decimal amount)
+        {
+            var baseUrl = _config["Services:PaymentService"];
+
+            var paymentData = new
+            {
+                OrderId = orderId,
+                Amount = amount
+            };
+
+            var response = await _httpClient.PostAsJsonAsync($"{baseUrl}/api/payment", paymentData);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }

@@ -38,6 +38,14 @@ namespace OrderService.Controllers
             if (product.Stock < dto.Quantity)
                 return BadRequest("Not enough stock");
 
+            // 💰 4️⃣ Calculate Amount
+            var totalAmount = product.Price * dto.Quantity;
+            // 💳 5️⃣ Call Payment Service
+            var paymentSuccess = await _externalService.ProcessPayment(dto.ProductId, totalAmount);
+
+            if (!paymentSuccess)
+                return BadRequest("Payment Failed");
+
             // 4️⃣ Create Order
             var order = new Order
             {
@@ -57,7 +65,7 @@ namespace OrderService.Controllers
         [HttpGet("get-orders")]
         public async Task<IActionResult> GetOrders()
         {
-            var orders = await _context.Orders.ToListAsync();
+            var orders = _context.Orders.ToList();
             return Ok(orders);
         }
     }
