@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using OrderService.Data;
+using OrderService.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<ExternalService>();
 // Add services to the container.
 
 builder.Services.AddDbContext<OrderDbContext>(options =>
