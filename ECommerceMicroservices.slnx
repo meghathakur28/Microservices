@@ -1,1 +1,7 @@
-<Solution />
+<Solution>
+  <Project Path="NotificationService/NotificationService.csproj" />
+  <Project Path="OrderService/OrderService.csproj" />
+  <Project Path="PaymentService/PaymentService.csproj" />
+  <Project Path="ProductService/ProductService.csproj" />
+  <Project Path="UserService/UserService.csproj" />
+</Solution>
