@@ -12,6 +12,8 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
+
+builder.Services.AddSingleton<RabbitMqService>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

@@ -1,6 +1,10 @@
+using NotificationService.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var consumer = new RabbitMqConsumer();
+consumer.Start();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

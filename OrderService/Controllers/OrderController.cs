@@ -13,11 +13,13 @@ namespace OrderService.Controllers
     {
         private readonly OrderDbContext _context;
         private readonly ExternalService _externalService;
+        private readonly RabbitMqService _rabbitMqService;
 
-        public OrderController(OrderDbContext context, ExternalService externalService)
+        public OrderController(OrderDbContext context, ExternalService externalService, RabbitMqService rabbitMqService)
         {
             _context = context;
             _externalService = externalService;
+            _rabbitMqService = rabbitMqService;
         }
 
         // 🛒 PLACE ORDER
@@ -57,6 +59,13 @@ namespace OrderService.Controllers
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+
+            var orderEvent = new OrderEvent
+            {
+                OrderId = order.Id,
+                Message = "Order Placed Successfully"
+            };
+            _rabbitMqService.Publish(orderEvent);
 
             return Ok(order);
         }
