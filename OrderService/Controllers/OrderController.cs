@@ -63,7 +63,8 @@ namespace OrderService.Controllers
             var orderEvent = new OrderEvent
             {
                 OrderId = order.Id,
-                Message = "Order Placed Successfully"
+                Message = "Order Placed Successfully",
+                Email = user.Email
             };
             _rabbitMqService.Publish(orderEvent);
 

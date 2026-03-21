@@ -35,6 +35,15 @@ namespace NotificationService.Service
                 var orderEvent = JsonSerializer.Deserialize<OrderEvent>(message);
 
                 Console.WriteLine($"📩 Order Received: {orderEvent.OrderId}");
+
+                // ⭐ CREATE EMAIL SERVICE HERE
+                var emailService = new EmailService();
+
+                // ⭐ SEND EMAIL HERE
+                emailService.SendEmail(
+                    orderEvent.Email,
+                    $"Your order {orderEvent.OrderId} is confirmed!"
+                );
             };
 
             channel.BasicConsume(
